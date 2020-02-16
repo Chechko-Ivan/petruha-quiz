@@ -1,4 +1,4 @@
-<template>
+<template functional>
   <div class="container">
     <slot></slot>
   </div>
@@ -12,7 +12,7 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  max-width: 700px;
+  max-width: 800px;
   padding: 50px 25px;
   margin: 0 auto;
   box-sizing: border-box;

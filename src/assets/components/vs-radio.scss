@@ -1,0 +1,13 @@
+.vs-radio-content {
+  &:not(:last-of-type) {
+    margin-bottom: 15px;
+  }
+}
+
+.vs-radio {
+  flex-shrink: 0;
+}
+
+.vs-radio__label {
+  margin: 0 10px;
+}
