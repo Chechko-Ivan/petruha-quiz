@@ -1,0 +1,47 @@
+[
+  {
+    "id": 0,
+    "category": "CUTLETS",
+    "title": "Митболы с творожным сыром"
+  },
+  {
+    "id": 1,
+    "category": "CUTLETS",
+    "title": "Митболы"
+  },
+  {
+    "id": 2,
+    "category": "CUTLETS",
+    "title": "Биточки с сыром"
+  },
+  {
+    "id": 3,
+    "category": "CUTLETS",
+    "title": "Котлеты по-домашнему"
+  },
+  {
+    "id": 4,
+    "category": "CUTLETS",
+    "title": "Котлеты сливочные с сыром"
+  },
+  {
+    "id": 5,
+    "category": "SAUSAGES",
+    "title": "Колбаски \"Оригинальные\""
+  },
+  {
+    "id": 6,
+    "category": "SAUSAGES",
+    "title": "Колбаски \"По-балкански\""
+  },
+  {
+    "id": 7,
+    "category": "SAUSAGES",
+    "title": "Колбаски \"По-французски\""
+  },
+  {
+    "id": 8,
+    "category": "SAUSAGES",
+    "title": "Колбаски \"По-итальянски\""
+  }
+]
