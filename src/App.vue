@@ -221,6 +221,9 @@ export default {
     nextStep() {
       if (!this.isStepValid()) {
         this.openNotification({ text: this.$options.notificationMessages.invalidQuizStep });
+        this.$nextTick(() => {
+          this.$scrollTo(document.querySelector('.quiz-item.error'), { offset: -120 });
+        });
         return;
       }
 
@@ -280,7 +283,7 @@ export default {
       this.$vs.notification({
         progress: 'auto',
         position: 'top-right',
-        duration: 5000,
+        duration: 4000,
         flat: true,
         title: title,
         text: text,

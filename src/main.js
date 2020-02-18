@@ -11,7 +11,7 @@ Vue.use(Vuesax);
 
 Vue.use(VueScrollTo, {
   duration: 500,
-  easing: 'ease-out',
+  easing: 'ease-in-out',
   offset: 0
 });
 
