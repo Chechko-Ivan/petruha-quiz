@@ -1,11 +1,11 @@
 <template>
   <div :class="['quiz-item', { error }]">
     <vs-radio v-model="value" class="quiz-item-inner" :val="title">
-      <div v-if="imageSrc" :class="['quiz-item-image', { withImage: imageSrc }]">
+      <div v-if="withImage" :class="['quiz-item-image', { withImage }]">
         <picture>
-          <source :srcset="require(`@/static/products/${imageSrc}.webp`)" type="image/webp" />
-          <source :srcset="require(`@/static/products/${imageSrc}.png`)" type="image/png" />
-          <img :src="require(`@/static/products/${imageSrc}.png`)" loading="lazy" :alt="title" />
+          <source :srcset="require(`@/static/products.v2/${id}.webp`)" type="image/webp" />
+          <source :srcset="require(`@/static/products.v2/${id}.png`)" type="image/png" />
+          <img :src="require(`@/static/products.v2/${id}.png`)" :alt="title" />
         </picture>
       </div>
 
@@ -25,13 +25,18 @@ export default {
   sync: ['value'],
 
   props: {
+    id: {
+      type: Number,
+      required: true
+    },
+
     title: {
       type: String,
       default: ''
     },
 
-    imageSrc: {
-      type: String,
+    withImage: {
+      type: Boolean,
       required: true
     },
 

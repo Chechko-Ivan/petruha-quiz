@@ -1,23 +1,463 @@
 [
   {
-    "type": "ITEM_WITH_ANSWERS",
-    "productCategory": [
-      "CUTLETS",
-      "SAUSAGES"
-    ],
+    "type": "ITEMS_WITH_ANSWERS",
     "title": "Покупали ли Вы котлеты и колбаски «Петруха Мастер» за последние три месяца?",
-    "answers": [
+    "items": [
       {
-        "value": 1,
-        "title": "Да, покупал(а)"
+        "id": 0,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Митболы с творожным сыром",
+        "answers": [
+          {
+            "value": 1,
+            "title": "Да, покупал(а)"
+          },
+          {
+            "value": 2,
+            "title": "Покупал(а) более трех месяцев, сейчас перестала покупать"
+          },
+          {
+            "value": 3,
+            "title": "Никогда не покупал(а)"
+          }
+        ]
       },
       {
-        "value": 2,
-        "title": "Покупал(а) более трех месяцев, сейчас перестала покупать"
+        "id": 1,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Митболы",
+        "answers": [
+          {
+            "value": 1,
+            "title": "Да, покупал(а)"
+          },
+          {
+            "value": 2,
+            "title": "Покупал(а) более трех месяцев, сейчас перестала покупать"
+          },
+          {
+            "value": 3,
+            "title": "Никогда не покупал(а)"
+          }
+        ]
       },
       {
-        "value": 3,
-        "title": "Никогда не покупал(а)"
+        "id": 2,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Биточки с сыром",
+        "answers": [
+          {
+            "value": 1,
+            "title": "Да, покупал(а)"
+          },
+          {
+            "value": 2,
+            "title": "Покупал(а) более трех месяцев, сейчас перестала покупать"
+          },
+          {
+            "value": 3,
+            "title": "Никогда не покупал(а)"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Котлеты по-домашнему",
+        "answers": [
+          {
+            "value": 1,
+            "title": "Да, покупал(а)"
+          },
+          {
+            "value": 2,
+            "title": "Покупал(а) более трех месяцев, сейчас перестала покупать"
+          },
+          {
+            "value": 3,
+            "title": "Никогда не покупал(а)"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Котлеты сливочные с сыром",
+        "answers": [
+          {
+            "value": 1,
+            "title": "Да, покупал(а)"
+          },
+          {
+            "value": 2,
+            "title": "Покупал(а) более трех месяцев, сейчас перестала покупать"
+          },
+          {
+            "value": 3,
+            "title": "Никогда не покупал(а)"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "withImage": true,
+        "category": "SAUSAGES",
+        "title": "Колбаски \"Оригинальные\"",
+        "answers": [
+          {
+            "value": 1,
+            "title": "Да, покупал(а)"
+          },
+          {
+            "value": 2,
+            "title": "Покупал(а) более трех месяцев, сейчас перестала покупать"
+          },
+          {
+            "value": 3,
+            "title": "Никогда не покупал(а)"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "withImage": true,
+        "category": "SAUSAGES",
+        "title": "Колбаски \"По-балкански\"",
+        "answers": [
+          {
+            "value": 1,
+            "title": "Да, покупал(а)"
+          },
+          {
+            "value": 2,
+            "title": "Покупал(а) более трех месяцев, сейчас перестала покупать"
+          },
+          {
+            "value": 3,
+            "title": "Никогда не покупал(а)"
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "withImage": true,
+        "category": "SAUSAGES",
+        "title": "Колбаски \"По-французски\"",
+        "answers": [
+          {
+            "value": 1,
+            "title": "Да, покупал(а)"
+          },
+          {
+            "value": 2,
+            "title": "Покупал(а) более трех месяцев, сейчас перестала покупать"
+          },
+          {
+            "value": 3,
+            "title": "Никогда не покупал(а)"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "withImage": true,
+        "category": "SAUSAGES",
+        "title": "Колбаски \"По-итальянски\"",
+        "answers": [
+          {
+            "value": 1,
+            "title": "Да, покупал(а)"
+          },
+          {
+            "value": 2,
+            "title": "Покупал(а) более трех месяцев, сейчас перестала покупать"
+          },
+          {
+            "value": 3,
+            "title": "Никогда не покупал(а)"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "UNANSWERED_ITEMS",
+    "filterQuizItemIndex": 0,
+    "filterByCategory": "CUTLETS",
+    "filterByAnswer": 1,
+    "title": "Представим ситуацию: Вы приходите в магазин и в нем есть все те котлеты «Петруха Мастер», которые Вы покупали. Отметьте, пожалуйста, какой продукт «Петруха Мастер» Вы купите в первую очередь?",
+    "items": [
+      {
+        "id": 0,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Митболы с творожным сыром"
+      },
+      {
+        "id": 1,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Митболы"
+      },
+      {
+        "id": 2,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Биточки с сыром"
+      },
+      {
+        "id": 3,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Котлеты по-домашнему"
+      },
+      {
+        "id": 4,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Котлеты сливочные с сыром"
+      },
+      {
+        "id": 5,
+        "withImage": true,
+        "category": "SAUSAGES",
+        "title": "Колбаски \"Оригинальные\""
+      },
+      {
+        "id": 6,
+        "withImage": true,
+        "category": "SAUSAGES",
+        "title": "Колбаски \"По-балкански\""
+      },
+      {
+        "id": 7,
+        "withImage": true,
+        "category": "SAUSAGES",
+        "title": "Колбаски \"По-французски\""
+      },
+      {
+        "id": 8,
+        "withImage": true,
+        "category": "SAUSAGES",
+        "title": "Колбаски \"По-итальянски\""
+      },
+      {
+        "id": 100,
+        "withImage": false,
+        "category": "ALL",
+        "title": "Куплю любой, нет предпочтений"
+      }
+    ]
+  },
+  {
+    "type": "UNANSWERED_ITEMS",
+    "filterQuizItemIndex": 0,
+    "filterByCategory": "CUTLETS",
+    "filterByAnswer": 1,
+    "title": "Представим ситуацию: Вы приходите в магазин и в нем есть все те котлеты «Петруха Мастер», которые Вы покупали. Отметьте, пожалуйста, какой продукт «Петруха Мастер» Вы купите в последнюю очередь?",
+    "items": [
+      {
+        "id": 0,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Митболы с творожным сыром"
+      },
+      {
+        "id": 1,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Митболы"
+      },
+      {
+        "id": 2,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Биточки с сыром"
+      },
+      {
+        "id": 3,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Котлеты по-домашнему"
+      },
+      {
+        "id": 4,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Котлеты сливочные с сыром"
+      },
+      {
+        "id": 5,
+        "withImage": true,
+        "category": "SAUSAGES",
+        "title": "Колбаски \"Оригинальные\""
+      },
+      {
+        "id": 6,
+        "withImage": true,
+        "category": "SAUSAGES",
+        "title": "Колбаски \"По-балкански\""
+      },
+      {
+        "id": 7,
+        "withImage": true,
+        "category": "SAUSAGES",
+        "title": "Колбаски \"По-французски\""
+      },
+      {
+        "id": 8,
+        "withImage": true,
+        "category": "SAUSAGES",
+        "title": "Колбаски \"По-итальянски\""
+      },
+      {
+        "id": 100,
+        "withImage": false,
+        "category": "ALL",
+        "title": "Куплю любой, нет предпочтений"
+      }
+    ]
+  },
+  {
+    "type": "UNANSWERED_ITEMS",
+    "filterQuizItemIndex": 0,
+    "filterByCategory": "SAUSAGES",
+    "filterByAnswer": 1,
+    "title": "Представим ситуацию: Вы приходите в магазин и в нем есть все те колбаски «Петруха Мастер», которые Вы покупали. Отметьте, пожалуйста, какой продукт «Петруха Мастер» Вы купите в первую очередь?",
+    "items": [
+      {
+        "id": 0,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Митболы с творожным сыром"
+      },
+      {
+        "id": 1,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Митболы"
+      },
+      {
+        "id": 2,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Биточки с сыром"
+      },
+      {
+        "id": 3,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Котлеты по-домашнему"
+      },
+      {
+        "id": 4,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Котлеты сливочные с сыром"
+      },
+      {
+        "id": 5,
+        "withImage": true,
+        "category": "SAUSAGES",
+        "title": "Колбаски \"Оригинальные\""
+      },
+      {
+        "id": 6,
+        "withImage": true,
+        "category": "SAUSAGES",
+        "title": "Колбаски \"По-балкански\""
+      },
+      {
+        "id": 7,
+        "withImage": true,
+        "category": "SAUSAGES",
+        "title": "Колбаски \"По-французски\""
+      },
+      {
+        "id": 8,
+        "withImage": true,
+        "category": "SAUSAGES",
+        "title": "Колбаски \"По-итальянски\""
+      },
+      {
+        "id": 100,
+        "withImage": false,
+        "category": "ALL",
+        "title": "Куплю любой, нет предпочтений"
+      }
+    ]
+  },
+  {
+    "type": "UNANSWERED_ITEMS",
+    "filterQuizItemIndex": 0,
+    "filterByCategory": "SAUSAGES",
+    "filterByAnswer": 1,
+    "title": "Представим ситуацию: Вы приходите в магазин и в нем есть все те колбаски «Петруха Мастер», которые Вы покупали. Отметьте, пожалуйста, какой продукт «Петруха Мастер» Вы купите в последнюю очередь?",
+    "items": [
+      {
+        "id": 0,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Митболы с творожным сыром"
+      },
+      {
+        "id": 1,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Митболы"
+      },
+      {
+        "id": 2,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Биточки с сыром"
+      },
+      {
+        "id": 3,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Котлеты по-домашнему"
+      },
+      {
+        "id": 4,
+        "withImage": true,
+        "category": "CUTLETS",
+        "title": "Котлеты сливочные с сыром"
+      },
+      {
+        "id": 5,
+        "withImage": true,
+        "category": "SAUSAGES",
+        "title": "Колбаски \"Оригинальные\""
+      },
+      {
+        "id": 6,
+        "withImage": true,
+        "category": "SAUSAGES",
+        "title": "Колбаски \"По-балкански\""
+      },
+      {
+        "id": 7,
+        "withImage": true,
+        "category": "SAUSAGES",
+        "title": "Колбаски \"По-французски\""
+      },
+      {
+        "id": 8,
+        "withImage": true,
+        "category": "SAUSAGES",
+        "title": "Колбаски \"По-итальянски\""
+      },
+      {
+        "id": 100,
+        "withImage": false,
+        "category": "ALL",
+        "title": "Куплю любой, нет предпочтений"
       }
     ]
   }

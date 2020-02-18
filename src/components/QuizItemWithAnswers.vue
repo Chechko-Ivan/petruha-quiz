@@ -1,11 +1,11 @@
 <template>
   <div :class="['quiz-item', { error }]">
     <div class="quiz-item-inner">
-      <div v-if="imageSrc" class="quiz-item-image">
+      <div v-if="withImage" class="quiz-item-image">
         <picture>
-          <source :srcset="require(`@/static/products/${imageSrc}.webp`)" type="image/webp" />
-          <source :srcset="require(`@/static/products/${imageSrc}.png`)" type="image/png" />
-          <img :src="require(`@/static/products/${imageSrc}.png`)" loading="lazy" :alt="title" />
+          <source :srcset="require(`@/static/products.v2/${id}.webp`)" type="image/webp" />
+          <source :srcset="require(`@/static/products.v2/${id}.png`)" type="image/png" />
+          <img :src="require(`@/static/products.v2/${id}.png`)" :alt="title" />
         </picture>
       </div>
 
@@ -16,7 +16,7 @@
 
         <div class="quiz-item-answers">
           <vs-radio
-            v-for="answer in answers !== 'undefined' && answers.items"
+            v-for="answer in answers.length && answers"
             :key="answer.value"
             :val="answer.value"
             v-model="value"
@@ -36,19 +36,24 @@ export default {
   sync: ['value'],
 
   props: {
+    id: {
+      type: Number,
+      require: true
+    },
+
     title: {
       type: String,
       default: ''
     },
 
-    imageSrc: {
-      type: String,
-      required: true
+    withImage: {
+      type: Boolean,
+      require: true
     },
 
     answers: {
-      type: Object,
-      default: () => {}
+      type: Array,
+      default: () => []
     },
 
     error: {
