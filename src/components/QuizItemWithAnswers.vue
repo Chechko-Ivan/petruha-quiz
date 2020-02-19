@@ -15,14 +15,21 @@
         </h3>
 
         <div class="quiz-item-answers">
-          <vs-radio
-            v-for="answer in answers.length && answers"
-            :key="answer.value"
-            :val="answer.value"
-            v-model="value"
-          >
-            {{ answer.title }}
-          </vs-radio>
+          <template v-for="(answer, index) in answers">
+            <vs-radio :key="answer.value" :val="answer.value" v-model="value">
+              {{ answer.title }}
+            </vs-radio>
+
+            <base-text-area
+              v-if="answer.needDescription && answer.value === value"
+              :id="id"
+              :key="`${answer.value}-${index}`"
+              :title="answer.descriptionTitle"
+              :label="answer.descriptionLabel"
+              :value="customeValue"
+              @input="val => $emit('custome-value', val)"
+            ></base-text-area>
+          </template>
         </div>
       </div>
     </div>
@@ -30,8 +37,14 @@
 </template>
 
 <script>
+import BaseTextArea from '@/components/BaseTextArea.vue';
+
 export default {
   name: 'QuizItemWithAnswers',
+
+  components: {
+    BaseTextArea
+  },
 
   sync: ['value'],
 
@@ -54,6 +67,11 @@ export default {
     answers: {
       type: Array,
       default: () => []
+    },
+
+    customeValue: {
+      type: String,
+      default: ''
     },
 
     error: {

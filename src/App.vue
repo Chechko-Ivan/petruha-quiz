@@ -31,6 +31,8 @@
               :withImage="item.withImage"
               :error="result[quizStep][index].error"
               :value.sync="result[quizStep][index].value"
+              :customeValue="result[quizStep][index].customeValue"
+              @custome-value="val => (result[quizStep][index].customeValue = val)"
             />
           </QuizItemsWrapper>
 
@@ -123,7 +125,12 @@ export default {
       target: this.$refs.quizContent
     });
 
-    this.getQuiz().then(() => {
+    this.getQuiz().then(quiz => {
+      this.quiz = quiz;
+
+      const clone = JSON.parse(JSON.stringify(quiz));
+      this.quizStorage = clone;
+
       if (this.quiz.length) {
         const { items } = this.quiz[this.quizStep];
 
@@ -147,9 +154,7 @@ export default {
     getQuiz() {
       return new Promise(resolve => {
         import('@/json/quiz.v2.json').then(({ default: quiz }) => {
-          this.quizStorage = quiz;
-          this.quiz = quiz;
-          resolve();
+          resolve(quiz);
         });
       });
     },
@@ -186,6 +191,23 @@ export default {
       }
     },
 
+    filterQuizStepItems(nextStep) {
+      const { filterQuizStepIndex, filterByCategory, filterByAnswer, items } = this.quizStorage[
+        nextStep
+      ];
+
+      const filtredQuizStepItems = items.filter(
+        (item, index) =>
+          item.category === 'ALL' ||
+          Object.entries(this.result[filterQuizStepIndex]).map(
+            ([, resultItem]) =>
+              resultItem.category === filterByCategory && filterByAnswer.includes(resultItem.value)
+          )[index]
+      );
+
+      this.quiz[nextStep].items = filtredQuizStepItems;
+    },
+
     setResultPlaceholder({ id, title, category, index, step }) {
       const { type } = this.quiz[step];
 
@@ -195,8 +217,7 @@ export default {
             ...this.$options.initialQuizItemResult,
             id,
             title,
-            category,
-            valueDescription: ''
+            category
           });
         } else {
           this.$set(this.result, step, {
@@ -204,8 +225,7 @@ export default {
               ...this.$options.initialQuizItemResult,
               id,
               title,
-              category,
-              valueDescription: ''
+              category
             }
           });
         }
@@ -227,50 +247,34 @@ export default {
         return;
       }
 
-      if (!this.quiz[this.quizStep]) {
-        console.error('FINISH');
-        return;
+      // if (!this.quizStorage[this.quizStep]) {
+      //   console.error('FINISH');
+      //   return;
+      // }
+
+      const { type, filterQuizStepIndex, filterByCategory, title } = this.quizStorage[
+        this.quizStep + 1
+      ];
+
+      if (typeof filterQuizStepIndex === 'number') {
+        this.filterQuizStepItems(this.quizStep + 1);
       }
 
-      const nextStep = this.quizStep + 1;
-
-      if (this.quiz[nextStep].type === 'ITEMS_WITH_ANSWERS') {
-        const { items } = this.quiz[nextStep];
-
-        items.forEach((value, index) =>
+      if (type === 'ITEMS_WITH_ANSWERS') {
+        this.quiz[this.quizStep + 1].items.forEach((value, index) =>
           this.setResultPlaceholder({
             id: value.id,
             title: value.title,
             category: value.category,
             index,
-            step: nextStep
+            step: this.quizStep + 1
           })
         );
-
-        this.quizStep = nextStep;
-      } else if (this.quiz[nextStep].type === 'UNANSWERED_ITEMS') {
-        const {
-          filterQuizItemIndex,
-          filterByCategory,
-          filterByAnswer,
-          title,
-          items
-        } = this.quizStorage[nextStep];
-
-        const currentQuizStepItems = items.filter(
-          (item, index) =>
-            item.category === 'ALL' ||
-            Object.entries(this.result[filterQuizItemIndex]).map(
-              ([, resultItem]) =>
-                resultItem.category === filterByCategory && resultItem.value === filterByAnswer
-            )[index]
-        );
-
-        this.quiz[nextStep].items = currentQuizStepItems;
-        this.setResultPlaceholder({ title, category: filterByCategory, step: nextStep });
+      } else if (type === 'UNANSWERED_ITEMS') {
+        this.setResultPlaceholder({ title, category: filterByCategory, step: this.quizStep + 1 });
       }
 
-      this.quizStep = nextStep;
+      this.quizStep = this.quizStep + 1;
       this.$scrollTo('#topAnchor', { offset: -100 });
     },
 
