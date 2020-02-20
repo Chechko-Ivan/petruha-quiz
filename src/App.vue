@@ -163,7 +163,21 @@ export default {
       const { type } = this.quizStorage[this.quizStep];
       const result = this.result[this.quizStep];
 
-      if (type === 'ITEMS_WITH_ANSWERS') {
+      if (result.skip) {
+        delete this.result[this.quizStep];
+        return true;
+      }
+
+      if (type && type === 'ITEMS_WITH_ANSWERS') {
+        // Если на все ответили отрицательно то заканчиваем опрос
+        const negativeResults = Object.entries(result)
+          .map(([, item]) => item.value)
+          .filter(value => value === 3).length;
+
+        if (negativeResults === this.quizStorage[this.quizStep].items.length) {
+          console.log('FINISH QUIZ');
+        }
+
         const itemWithErrors = {};
 
         for (let [key, item] of Object.entries(result)) {
@@ -180,7 +194,7 @@ export default {
             .map(([, item]) => item.error)
             .filter(error => !error).length === Object.keys(itemWithErrors).length
         );
-      } else if (type === 'UNANSWERED_ITEMS') {
+      } else if (type && type === 'UNANSWERED_ITEMS') {
         if (!result.value) {
           result.error = true;
           return false;
@@ -239,6 +253,14 @@ export default {
     },
 
     nextStep() {
+      const nextStepIndex = this.quizStep + 1;
+
+      // Заканчиваем опрос
+      if (!this.quizStorage[nextStepIndex]) {
+        console.log('FINISH');
+        return;
+      }
+
       if (!this.isStepValid()) {
         this.openNotification({ text: this.$options.notificationMessages.invalidQuizStep });
         this.$nextTick(() => {
@@ -247,21 +269,17 @@ export default {
         return;
       }
 
-      // if (!this.quizStorage[this.quizStep]) {
-      //   console.error('FINISH');
-      //   return;
-      // }
-
       const { type, filterQuizStepIndex, filterByCategory, title } = this.quizStorage[
         this.quizStep + 1
       ];
 
+      // Фильтруем следующий список продуктов и вопросов
       if (typeof filterQuizStepIndex === 'number') {
         this.filterQuizStepItems(this.quizStep + 1);
       }
 
       if (type === 'ITEMS_WITH_ANSWERS') {
-        this.quiz[this.quizStep + 1].items.forEach((value, index) =>
+        this.quiz[nextStepIndex].items.forEach((value, index) =>
           this.setResultPlaceholder({
             id: value.id,
             title: value.title,
@@ -274,7 +292,21 @@ export default {
         this.setResultPlaceholder({ title, category: filterByCategory, step: this.quizStep + 1 });
       }
 
-      this.quizStep = this.quizStep + 1;
+      // Пропускаем шаг если все товары или вопросы были отсеены
+      if (
+        !this.quiz[nextStepIndex].items ||
+        (this.quiz[nextStepIndex].items.length === 1 &&
+          this.quiz[nextStepIndex].items.find(item => item.category === 'ALL'))
+      ) {
+        this.quizStep = nextStepIndex;
+        this.result[this.quizStep].skip = true;
+
+        this.$nextTick(() => {
+          this.nextStep();
+        });
+      }
+
+      this.quizStep = nextStepIndex;
       this.$scrollTo('#topAnchor', { offset: -100 });
     },
 
