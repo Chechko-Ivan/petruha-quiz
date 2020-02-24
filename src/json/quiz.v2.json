@@ -873,38 +873,124 @@
     ]
   },
   {
-    "type": "UNANSWERED_ITEMS",
+    "type": "ITEMS_WITH_ANSWERS",
+    "unselectable": true,
     "title": "Что Вам хотелось бы изменить в ассортименте котлет «Петруха Мастер»?",
     "items": [
       {
+        "id": 0,
         "withImage": false,
         "category": "CUTLETS",
-        "title": "Митболы с творожным сыром",
         "answers": [
           {
             "value": "Добавить новые начинки",
             "title": "Добавить новые начинки",
             "needDescription": true,
             "descriptionLabel": "Уточните, что именно?"
-          },
+          }
+        ]
+      },
+      {
+        "id": 1,
+        "withImage": false,
+        "category": "CUTLETS",
+        "answers": [
           {
             "value": "Добавить/изменить вкусы (специи)",
             "title": "Добавить/изменить вкусы (специи)",
             "needDescription": true,
             "descriptionLabel": "Уточните, что именно?"
-          },
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "withImage": false,
+        "category": "CUTLETS",
+        "answers": [
           {
             "value": "Добавить новые виды котлет, кроме, как митболы, биточки, котлеты",
             "title": "Добавить новые виды котлет, кроме, как митболы, биточки, котлеты",
             "needDescription": true,
             "descriptionLabel": "Уточните, что именно?"
-          },
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "withImage": false,
+        "category": "CUTLETS",
+        "answers": [
           {
             "value": "Другое",
             "title": "Другое",
             "needDescription": true,
             "descriptionLabel": "Уточните, что именно?"
-          },
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "withImage": false,
+        "category": "CUTLETS",
+        "answers": [
+          {
+            "value": "Не хотел(а) бы ничего добавлять",
+            "title": "Не хотел(а) бы ничего добавлять"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "ITEMS_WITH_ANSWERS",
+    "unselectable": true,
+    "title": "Что Вам хотелось бы изменить в ассортименте колбасок «Петруха Мастер»?",
+    "items": [
+      {
+        "id": 0,
+        "withImage": false,
+        "category": "SAUSAGES",
+        "answers": [
+          {
+            "value": "Добавить/изменить вкусы (специи)",
+            "title": "Добавить/изменить вкусы (специи)",
+            "needDescription": true,
+            "descriptionLabel": "Уточните, что именно?"
+          }
+        ]
+      },
+      {
+        "id": 1,
+        "withImage": false,
+        "category": "SAUSAGES",
+        "answers": [
+          {
+            "value": "Добавить новые виды колбасок",
+            "title": "Добавить новые виды колбасок",
+            "needDescription": true,
+            "descriptionLabel": "Уточните, что именно?"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "withImage": false,
+        "category": "SAUSAGES",
+        "answers": [
+          {
+            "value": "Другое",
+            "title": "Другое",
+            "needDescription": true,
+            "descriptionLabel": "Уточните, что именно?"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "withImage": false,
+        "category": "SAUSAGES",
+        "answers": [
           {
             "value": "Не хотел(а) бы ничего добавлять",
             "title": "Не хотел(а) бы ничего добавлять"

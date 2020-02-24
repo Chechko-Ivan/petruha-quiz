@@ -5,11 +5,11 @@
         <Logo />
       </div>
 
-      <vs-alert v-if="alertMessage">
+      <vs-alert v-if="alertMessage && !isQuizFinish">
         {{ alertMessage }}
       </vs-alert>
 
-      <div ref="quiz-content" class="app-quiz">
+      <div v-if="!isQuizFinish" ref="quiz-content" class="app-quiz">
         <QuizWrapper
           v-for="(step, index) in quiz"
           :key="index"
@@ -29,6 +29,7 @@
               :title="item.title"
               :answers="item.answers"
               :withImage="item.withImage"
+              :unselectable="step.unselectable"
               :error="result[quizStep][index].error"
               :value.sync="result[quizStep][index].value"
               :customeValue="result[quizStep][index].customeValue"
@@ -64,6 +65,10 @@
             Дальше
           </vs-button>
         </div>
+      </div>
+
+      <div v-if="isQuizFinish" class="finish-message">
+        Спасибо за участие!
       </div>
     </Container>
   </div>
@@ -103,10 +108,10 @@ export default {
   data() {
     return {
       isQuizLoad: false,
+      isQuizFinish: false,
       quizStorage: [],
       quiz: [],
       products: [],
-      savedQuizItems: {},
       quizStep: 0,
       result: {}
     };
@@ -160,7 +165,7 @@ export default {
     },
 
     isStepValid() {
-      const { type } = this.quizStorage[this.quizStep];
+      const { type, unselectable } = this.quizStorage[this.quizStep];
       const result = this.result[this.quizStep];
 
       if (result.skip) {
@@ -169,15 +174,6 @@ export default {
       }
 
       if (type && type === 'ITEMS_WITH_ANSWERS') {
-        // Если на все ответили отрицательно то заканчиваем опрос
-        const negativeResults = Object.entries(result)
-          .map(([, item]) => item.value)
-          .filter(value => value === 3).length;
-
-        if (negativeResults === this.quizStorage[this.quizStep].items.length) {
-          console.log('FINISH QUIZ');
-        }
-
         const itemWithErrors = {};
 
         for (let [key, item] of Object.entries(result)) {
@@ -189,10 +185,14 @@ export default {
         }
 
         this.result[this.quizStep] = itemWithErrors;
+        const arrayOfErrors = Object.entries(itemWithErrors)
+          .map(([, item]) => item.error)
+          .filter(error => !error);
+
+        console.log(arrayOfErrors);
         return (
-          Object.entries(itemWithErrors)
-            .map(([, item]) => item.error)
-            .filter(error => !error).length === Object.keys(itemWithErrors).length
+          arrayOfErrors.length === Object.keys(itemWithErrors).length ||
+          (arrayOfErrors.length !== Object.keys(result).length && unselectable)
         );
       } else if (type && type === 'UNANSWERED_ITEMS') {
         if (!result.value) {
@@ -255,7 +255,7 @@ export default {
     nextStep() {
       const nextStepIndex = this.quizStep + 1;
 
-      // Заканчиваем опрос
+      // Заканчиваем опрос если вопросы закончились
       if (!this.quizStorage[nextStepIndex]) {
         console.log('FINISH');
         return;
@@ -267,6 +267,18 @@ export default {
           this.$scrollTo(document.querySelector('.quiz-item.error'), { offset: -120 });
         });
         return;
+      }
+
+      // Если на все ответили отрицательно то заканчиваем опрос
+      if (this.quizStep === 0 && this.quizStorage[this.quizStep].type === 'ITEMS_WITH_ANSWERS') {
+        const negativeResults = Object.entries(this.result[this.quizStep])
+          .map(([, item]) => item.value)
+          .filter(value => value === 3).length;
+
+        if (negativeResults === this.quizStorage[this.quizStep].items.length) {
+          this.sendForm();
+          return;
+        }
       }
 
       const { type, filterQuizStepIndex, filterByCategory, title } = this.quizStorage[
@@ -311,8 +323,18 @@ export default {
     },
 
     prevStep() {
-      this.quizStep = this.quizStep - 1;
+      const resultKeys = Object.keys(this.result);
+      this.quizStep = Number(resultKeys[resultKeys.indexOf(String(this.quizStep)) - 1]);
       this.$scrollTo('#topAnchor', { offset: -100 });
+    },
+
+    sendForm() {
+      const loading = this.$vs.loading({
+        target: this.$refs.quizContent
+      });
+
+      loading.close();
+      this.isQuizFinish = true;
     },
 
     openNotification({ title = 'Уведомление', text, color = 'primary' }) {
@@ -349,5 +371,20 @@ body,
 
 .flip-list-move {
   transition: transform 1s;
+}
+
+.finish-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  font-size: 61px;
+  font-weight: 700;
+  width: 100%;
+  transform: translate(-50%, -50%);
+
+  @media (max-width: 600px) {
+    font-size: 41px;
+  }
 }
 </style>

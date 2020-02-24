@@ -6,8 +6,8 @@
 
     <div class="base-textarea-content">
       <textarea
-        :id="`base-textarea-${id}`"
         placeholder="textarea"
+        :id="`base-textarea-${id}`"
         :value="value"
         @input="$emit('input', $event.target.value)"
       ></textarea>
@@ -49,6 +49,7 @@ export default {
 <style lang="scss" scoped>
 .base-textarea,
 .base-textarea-content {
+  width: 100%;
   display: flex;
   position: relative;
   flex-direction: column;

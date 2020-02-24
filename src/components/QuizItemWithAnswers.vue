@@ -10,15 +10,20 @@
       </div>
 
       <div class="quiz-item-content">
-        <h3 class="quiz-item-title">
+        <h3 v-if="title" class="quiz-item-title">
           {{ title }}
         </h3>
 
         <div class="quiz-item-answers">
           <template v-for="(answer, index) in answers">
-            <vs-radio :key="answer.value" :val="answer.value" v-model="value">
+            <component
+              :is="unselectable ? 'vs-checkbox' : 'vs-radio'"
+              :key="answer.value"
+              :val="answer.value"
+              v-model="value"
+            >
               {{ answer.title }}
-            </vs-radio>
+            </component>
 
             <base-text-area
               v-if="answer.needDescription && answer.value === value"
@@ -64,6 +69,11 @@ export default {
       require: true
     },
 
+    unselectable: {
+      type: Boolean,
+      default: false
+    },
+
     answers: {
       type: Array,
       default: () => []
@@ -102,6 +112,7 @@ export default {
 .quiz-item-image {
   width: 250px;
   flex-shrink: 0;
+  flex-grow: 1;
   margin-right: 15px;
 
   picture {
@@ -113,6 +124,7 @@ export default {
 
 .quiz-item-content {
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
 }
 
