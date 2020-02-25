@@ -998,5 +998,32 @@
         ]
       }
     ]
+  },
+  {
+    "type": "UNANSWERED_ITEMS",
+    "title": "Укажите Ваш пол:",
+    "items": [
+      {
+        "id": 0,
+        "withImage": false,
+        "category": "ALL",
+        "title": "Мужской"
+      },
+      {
+        "id": 1,
+        "withImage": false,
+        "category": "ALL",
+        "title": "Женский"
+      }
+    ]
+  },
+  {
+    "type": "FIELDS",
+    "title": "Сколько Вам полных лет?",
+    "items": [
+      {
+        "placeholder": 18
+      }
+    ]
   }
 ]

@@ -54,6 +54,19 @@
               :value.sync="result[quizStep].value"
             />
           </QuizItemsWrapper>
+
+          <QuizItemsWrapper v-if="quizStep === index && result[quizStep] && step.type === 'FIELDS'">
+            <QuizTitle>
+              {{ step.title }}
+            </QuizTitle>
+
+            <vs-input
+              v-for="(item, index) in step.items"
+              :key="index"
+              :placeholder="item.placeholder"
+              v-model="result[quizStep][index].value"
+            ></vs-input>
+          </QuizItemsWrapper>
         </QuizWrapper>
 
         <div v-if="isQuizLoad && quiz.length" class="quiz-button-wrapper">
@@ -249,6 +262,14 @@ export default {
           title,
           category
         });
+      } else if (type === 'FIELDS') {
+        this.$set(this.result, step, {
+          [index]: {
+            ...this.$options.initialQuizItemResult,
+            title,
+            category
+          }
+        });
       }
     },
 
@@ -302,6 +323,16 @@ export default {
         );
       } else if (type === 'UNANSWERED_ITEMS') {
         this.setResultPlaceholder({ title, category: filterByCategory, step: this.quizStep + 1 });
+      } else if (type === 'FIELDS') {
+        this.quiz[nextStepIndex].items.forEach((value, index) =>
+          this.setResultPlaceholder({
+            id: value.id,
+            title: value.title,
+            category: value.category,
+            index,
+            step: this.quizStep + 1
+          })
+        );
       }
 
       // Пропускаем шаг если все товары или вопросы были отсеены
