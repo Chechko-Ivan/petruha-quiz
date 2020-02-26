@@ -875,6 +875,7 @@
   {
     "type": "ITEMS_WITH_ANSWERS",
     "unselectable": true,
+    "dontShowItemTitle": true,
     "title": "Что Вам хотелось бы изменить в ассортименте котлет «Петруха Мастер»?",
     "items": [
       {
@@ -950,6 +951,7 @@
   {
     "type": "ITEMS_WITH_ANSWERS",
     "unselectable": true,
+    "dontShowItemTitle": true,
     "title": "Что Вам хотелось бы изменить в ассортименте колбасок «Петруха Мастер»?",
     "items": [
       {
@@ -1014,15 +1016,15 @@
     "items": [
       {
         "id": 0,
+        "title": "Мужской",
         "withImage": false,
-        "category": "ALL",
-        "title": "Мужской"
+        "category": "ALL"
       },
       {
         "id": 1,
+        "title": "Женский",
         "withImage": false,
-        "category": "ALL",
-        "title": "Женский"
+        "category": "ALL"
       }
     ]
   },
