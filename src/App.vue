@@ -186,11 +186,17 @@ export default {
         return true;
       }
 
-      if (type && type === 'ITEMS_WITH_ANSWERS') {
+      if ((type && type === 'ITEMS_WITH_ANSWERS') || (type && type === 'FIELDS')) {
         const itemWithErrors = {};
 
         for (let [key, item] of Object.entries(result)) {
           if (!item.value) {
+            itemWithErrors[key] = { ...item, error: true };
+          } else if (
+            item.value &&
+            String(item.value).indexOf('укажите') !== -1 &&
+            !item.customeValue
+          ) {
             itemWithErrors[key] = { ...item, error: true };
           } else {
             itemWithErrors[key] = { ...item, error: false };
@@ -202,10 +208,9 @@ export default {
           .map(([, item]) => item.error)
           .filter(error => !error);
 
-        console.log(arrayOfErrors);
         return (
           arrayOfErrors.length === Object.keys(itemWithErrors).length ||
-          (arrayOfErrors.length !== Object.keys(result).length && unselectable)
+          (unselectable && arrayOfErrors.length)
         );
       } else if (type && type === 'UNANSWERED_ITEMS') {
         if (!result.value) {
