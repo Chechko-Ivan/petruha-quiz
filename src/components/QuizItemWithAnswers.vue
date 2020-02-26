@@ -10,7 +10,7 @@
       </div>
 
       <div class="quiz-item-content">
-        <h3 v-if="title" class="quiz-item-title">
+        <h3 v-if="title && !dontShowItemTitle" class="quiz-item-title">
           {{ title }}
         </h3>
 
@@ -70,6 +70,11 @@ export default {
     },
 
     unselectable: {
+      type: Boolean,
+      default: false
+    },
+
+    dontShowItemTitle: {
       type: Boolean,
       default: false
     },

@@ -30,6 +30,7 @@
               :answers="item.answers"
               :withImage="item.withImage"
               :unselectable="step.unselectable"
+              :dontShowItemTitle="step.dontShowItemTitle"
               :error="result[quizStep][index].error"
               :value.sync="result[quizStep][index].value"
               :customeValue="result[quizStep][index].customeValue"
@@ -186,7 +187,7 @@ export default {
         return true;
       }
 
-      if (type && type === 'ITEMS_WITH_ANSWERS') {
+      if ((type && type === 'ITEMS_WITH_ANSWERS') || (type && type === 'FIELDS')) {
         const itemWithErrors = {};
 
         for (let [key, item] of Object.entries(result)) {
@@ -202,7 +203,6 @@ export default {
           .map(([, item]) => item.error)
           .filter(error => !error);
 
-        console.log(arrayOfErrors);
         return (
           arrayOfErrors.length === Object.keys(itemWithErrors).length ||
           (arrayOfErrors.length !== Object.keys(result).length && unselectable)
@@ -238,7 +238,7 @@ export default {
     setResultPlaceholder({ id, title, category, index, step }) {
       const { type } = this.quiz[step];
 
-      if (type === 'ITEMS_WITH_ANSWERS') {
+      if (type === 'ITEMS_WITH_ANSWERS' || type === 'FIELDS') {
         if (this.result[step]) {
           this.$set(this.result[step], index, {
             ...this.$options.initialQuizItemResult,
@@ -262,14 +262,6 @@ export default {
           title,
           category
         });
-      } else if (type === 'FIELDS') {
-        this.$set(this.result, step, {
-          [index]: {
-            ...this.$options.initialQuizItemResult,
-            title,
-            category
-          }
-        });
       }
     },
 
@@ -278,7 +270,7 @@ export default {
 
       // Заканчиваем опрос если вопросы закончились
       if (!this.quizStorage[nextStepIndex]) {
-        console.log('FINISH');
+        this.sendForm();
         return;
       }
 
@@ -311,7 +303,7 @@ export default {
         this.filterQuizStepItems(this.quizStep + 1);
       }
 
-      if (type === 'ITEMS_WITH_ANSWERS') {
+      if (type === 'ITEMS_WITH_ANSWERS' || type === 'FIELDS') {
         this.quiz[nextStepIndex].items.forEach((value, index) =>
           this.setResultPlaceholder({
             id: value.id,
@@ -364,8 +356,30 @@ export default {
         target: this.$refs.quizContent
       });
 
-      loading.close();
-      this.isQuizFinish = true;
+      const body = new FormData();
+      body.append('quiz', this.result);
+
+      let options = {
+        method: 'POST',
+        body
+      };
+
+      fetch(`${window.BASE_API_PATH}/send`, options)
+        .then(data => data.json())
+        .then(res => {
+          loading.close();
+          this.isQuizFinish = true;
+
+          if (res.error) {
+            this.openNotification({ text: res.error });
+          }
+        })
+        .catch(() => {
+          loading.close();
+          this.openNotification({
+            text: 'Что-то пошло не так. Попробуйте отправить форму еще раз.'
+          });
+        });
     },
 
     openNotification({ title = 'Уведомление', text, color = 'primary' }) {
