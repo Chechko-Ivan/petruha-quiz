@@ -10,9 +10,7 @@
       </div>
 
       <div class="quiz-item-content">
-        <h3 v-if="title && !dontShowItemTitle" class="quiz-item-title">
-          {{ title }}
-        </h3>
+        <h3 v-if="title && !dontShowItemTitle" class="quiz-item-title">{{ title }}</h3>
 
         <div class="quiz-item-answers">
           <template v-for="(answer, index) in answers">
@@ -21,9 +19,7 @@
               :key="answer.value"
               :val="answer.value"
               v-model="value"
-            >
-              {{ answer.title }}
-            </component>
+            >{{ answer.title }}</component>
 
             <base-text-area
               v-if="answer.needDescription && answer.value === value"
@@ -112,18 +108,25 @@ export default {
 
 .quiz-item-inner {
   display: flex;
+
+  @media (max-width: 700px) {
+    flex-direction: column;
+  }
 }
 
 .quiz-item-image {
-  width: 250px;
-  flex-shrink: 0;
-  flex-grow: 1;
+  max-width: 250px;
+  width: 100%;
+  /* flex-shrink: 0;
+  flex-grow: 1; */
   margin-right: 15px;
 
+  @media (max-width: 700px) {
+    max-width: 300px !important;
+  }
+
   picture {
-    picture {
-      width: 100%;
-    }
+    width: 100%;
   }
 }
 
@@ -135,6 +138,11 @@ export default {
 
 .quiz-item-title {
   font-size: 20px;
+
+  @media (max-width: 700px) {
+    margin-top: 5px;
+    font-size: 17px !important;
+  }
 }
 
 .quiz-item-answers {

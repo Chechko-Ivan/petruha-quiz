@@ -1,4 +1,8 @@
 .vs-alert {
   box-sizing: border-box;
   font-family: inherit;
+
+  @media (max-width: 700px) {
+    height: auto !important;
+  }
 }

@@ -16,5 +16,9 @@ export default {
   margin-bottom: 25px;
   font-size: 23px;
   line-height: 1.3;
+
+  @media (max-width: 700px) {
+    font-size: 18px;
+  }
 }
 </style>

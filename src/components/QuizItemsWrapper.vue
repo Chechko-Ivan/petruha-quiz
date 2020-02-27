@@ -15,5 +15,9 @@ export default {
   padding: 20px 25px;
   background-color: #ffffff;
   border-radius: 5px 20px 20px;
+
+  @media (max-width: 700px) {
+    padding: 20px 15px;
+  }
 }
 </style>

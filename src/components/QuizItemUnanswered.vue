@@ -10,9 +10,7 @@
       </div>
 
       <div class="quiz-item-content">
-        <h3 class="quiz-item-title">
-          {{ title }}
-        </h3>
+        <h3 class="quiz-item-title">{{ title }}</h3>
       </div>
     </vs-radio>
   </div>
@@ -67,9 +65,17 @@ export default {
   &.vs-radio-content {
     justify-content: flex-start;
 
+    @media (max-width: 700px) {
+      flex-direction: row;
+    }
+
     .vs-radio__label {
       width: 100%;
       display: flex;
+
+      @media (max-width: 700px) {
+        flex-direction: column;
+      }
     }
 
     .quiz-item-image.withImage {
@@ -79,7 +85,7 @@ export default {
 }
 
 .quiz-item-image {
-  width: 250px;
+  max-width: 250px;
   flex-shrink: 0;
   margin-right: 15px;
 

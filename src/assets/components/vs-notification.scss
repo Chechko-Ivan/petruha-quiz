@@ -1,3 +1,10 @@
+.vs-notification {
+  @media (max-width: 600px) {
+    max-width: calc(100% - 30px) !important;
+    min-width: 0 !important;
+  }
+}
+
 .vs-notification__content__header {
   h4 {
     font-size: 20px;
