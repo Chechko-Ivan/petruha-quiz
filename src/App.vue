@@ -5,9 +5,7 @@
         <Logo />
       </div>
 
-      <vs-alert v-if="alertMessage && !isQuizFinish">
-        {{ alertMessage }}
-      </vs-alert>
+      <vs-alert v-if="alertMessage && !isQuizFinish">{{ alertMessage }}</vs-alert>
 
       <div v-if="!isQuizFinish" ref="quiz-content" class="app-quiz">
         <QuizWrapper
@@ -18,9 +16,7 @@
           <QuizItemsWrapper
             v-if="quizStep === index && result[quizStep] && step.type === 'ITEMS_WITH_ANSWERS'"
           >
-            <QuizTitle>
-              {{ step.title }}
-            </QuizTitle>
+            <QuizTitle>{{ step.title }}</QuizTitle>
 
             <QuizItemWithAnswers
               v-for="(item, index) in step.items"
@@ -41,9 +37,7 @@
           <QuizItemsWrapper
             v-if="quizStep === index && result[quizStep] && step.type === 'UNANSWERED_ITEMS'"
           >
-            <QuizTitle>
-              {{ step.title }}
-            </QuizTitle>
+            <QuizTitle>{{ step.title }}</QuizTitle>
 
             <QuizItemUnanswered
               v-for="(item, index) in step.items"
@@ -57,9 +51,7 @@
           </QuizItemsWrapper>
 
           <QuizItemsWrapper v-if="quizStep === index && result[quizStep] && step.type === 'FIELDS'">
-            <QuizTitle>
-              {{ step.title }}
-            </QuizTitle>
+            <QuizTitle>{{ step.title }}</QuizTitle>
 
             <vs-input
               v-for="(item, index) in step.items"
@@ -71,19 +63,13 @@
         </QuizWrapper>
 
         <div v-if="isQuizLoad && quiz.length" class="quiz-button-wrapper">
-          <vs-button v-if="quizStep > 0" flat @click="prevStep">
-            Назад
-          </vs-button>
+          <vs-button v-if="quizStep > 0" flat @click="prevStep">Назад</vs-button>
 
-          <vs-button flat active @click="nextStep">
-            Дальше
-          </vs-button>
+          <vs-button flat active @click="nextStep">Дальше</vs-button>
         </div>
       </div>
 
-      <div v-if="isQuizFinish" class="finish-message">
-        Спасибо за участие!
-      </div>
+      <div v-if="isQuizFinish" class="finish-message">Спасибо за участие!</div>
     </Container>
   </div>
 </template>
@@ -363,7 +349,7 @@ export default {
       });
 
       const body = new FormData();
-      body.append('quiz', this.result);
+      body.append('quiz', JSON.stringify(this.result));
 
       let options = {
         method: 'POST',
