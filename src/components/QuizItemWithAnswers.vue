@@ -19,7 +19,9 @@
               :key="answer.value"
               :val="answer.value"
               v-model="value"
-            >{{ answer.title }}</component>
+            >
+              {{ answer.title }}
+            </component>
 
             <base-text-area
               v-if="answer.needDescription && answer.value === value"
