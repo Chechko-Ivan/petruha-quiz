@@ -168,6 +168,11 @@ export default {
       const { type, unselectable } = this.quizStorage[this.quizStep];
       const result = this.result[this.quizStep];
 
+      // Пропускаем если нету вопросов
+      if (!result) {
+        return true;
+      }
+
       if (result.skip) {
         delete this.result[this.quizStep];
         return true;
@@ -307,26 +312,26 @@ export default {
         );
       } else if (type === 'UNANSWERED_ITEMS') {
         this.setResultPlaceholder({ title, category: filterByCategory, step: this.quizStep + 1 });
-      } else if (type === 'FIELDS') {
-        this.quiz[nextStepIndex].items.forEach((value, index) =>
-          this.setResultPlaceholder({
-            id: value.id,
-            title: value.title,
-            category: value.category,
-            index,
-            step: this.quizStep + 1
-          })
-        );
       }
 
       // Пропускаем шаг если все товары или вопросы были отсеены
+      if (!this.quiz[nextStepIndex].items.length) {
+        console.log(123);
+        this.quizStep = nextStepIndex;
+
+        this.$nextTick(() => {
+          this.nextStep();
+        });
+      }
+
       if (
-        !this.quiz[nextStepIndex].items ||
-        (this.quiz[nextStepIndex].items.length === 1 &&
-          this.quiz[nextStepIndex].items.find(item => item.category === 'ALL'))
+        this.quiz[nextStepIndex].items.length <= 2 &&
+        this.quiz[nextStepIndex].items.find(item => item.category === 'ALL')
       ) {
         this.quizStep = nextStepIndex;
-        this.result[this.quizStep].skip = true;
+        this.$nextTick(() => {
+          this.result[this.quizStep].skip = true;
+        });
 
         this.$nextTick(() => {
           this.nextStep();
