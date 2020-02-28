@@ -200,6 +200,8 @@ export default {
           .map(([, item]) => item.error)
           .filter(error => !error);
 
+        console.log(arrayOfErrors, 'arrayOfErrors');
+
         return (
           arrayOfErrors.length === Object.keys(itemWithErrors).length ||
           (unselectable && arrayOfErrors.length)
@@ -235,7 +237,7 @@ export default {
     setResultPlaceholder({ id, title, category, index, step }) {
       const { type } = this.quiz[step];
 
-      if (type === 'ITEMS_WITH_ANSWERS' || type === 'FIELDS') {
+      if (type === 'ITEMS_WITH_ANSWERS') {
         if (this.result[step]) {
           this.$set(this.result[step], index, {
             ...this.$options.initialQuizItemResult,
@@ -259,23 +261,33 @@ export default {
           title,
           category
         });
+      } else if (type === 'FIELDS') {
+        this.$set(this.result, step, {
+          [index]: {
+            ...this.$options.initialQuizItemResult,
+            value: '',
+            id,
+            title,
+            category
+          }
+        });
       }
     },
 
     nextStep() {
       const nextStepIndex = this.quizStep + 1;
 
-      // Заканчиваем опрос если вопросы закончились
-      if (!this.quizStorage[nextStepIndex]) {
-        this.sendForm();
-        return;
-      }
-
       if (!this.isStepValid()) {
         this.openNotification({ text: this.$options.notificationMessages.invalidQuizStep });
         this.$nextTick(() => {
           this.$scrollTo(document.querySelector('.quiz-item.error'), { offset: -120 });
         });
+        return;
+      }
+
+      // Заканчиваем опрос если вопросы закончились
+      if (!this.quizStorage[nextStepIndex]) {
+        this.sendForm();
         return;
       }
 
@@ -316,7 +328,6 @@ export default {
 
       // Пропускаем шаг если все товары или вопросы были отсеены
       if (!this.quiz[nextStepIndex].items.length) {
-        console.log(123);
         this.quizStep = nextStepIndex;
 
         this.$nextTick(() => {

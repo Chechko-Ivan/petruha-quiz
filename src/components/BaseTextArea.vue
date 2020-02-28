@@ -7,7 +7,6 @@
     <div class="base-textarea-content">
       <textarea
         placeholder="textarea"
-        autofocus
         :id="`base-textarea-${id}`"
         :value="value"
         @input="$emit('input', $event.target.value)"
