@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'Cocon';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Cocon Regular'), local('Cocon-Regular'),
+    url('../../public/fonts/Cocon-Regular.woff2') format('woff2'),
+    url('../../public/fonts/Cocon-Regular.woff') format('woff'),
+    url('../../public/fonts/Cocon-Regular.ttf') format('truetype');
+}

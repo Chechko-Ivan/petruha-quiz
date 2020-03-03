@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <Container>
+    <Container v-if="!isQuizFinish">
       <div id="topAnchor" class="app-logo">
         <Logo />
       </div>
 
-      <vs-alert v-if="alertMessage && !isQuizFinish">{{ alertMessage }}</vs-alert>
+      <vs-alert v-if="alertMessage">{{ alertMessage }}</vs-alert>
 
-      <div v-if="!isQuizFinish" ref="quiz-content" class="app-quiz">
+      <div ref="quiz-content" class="app-quiz">
         <QuizWrapper
           v-for="(step, index) in quiz"
           :key="index"
@@ -69,8 +69,10 @@
         </div>
       </div>
 
-      <div v-if="isQuizFinish" class="finish-message">Спасибо за участие!</div>
+      <!-- <div v-if="isQuizFinish" class="finish-message">Спасибо за участие!</div> -->
     </Container>
+
+    <FinishBanner v-if="isQuizFinish"></FinishBanner>
   </div>
 </template>
 
@@ -82,6 +84,7 @@ import QuizTitle from '@/components/QuizTitle.vue';
 import QuizItemsWrapper from '@/components/QuizItemsWrapper.vue';
 import QuizItemWithAnswers from '@/components/QuizItemWithAnswers.vue';
 import QuizItemUnanswered from '@/components/QuizItemUnanswered.vue';
+import FinishBanner from '@/components/FinishBanner.vue';
 
 export default {
   initialQuizItemResult: {
@@ -102,7 +105,8 @@ export default {
     QuizTitle,
     QuizItemsWrapper,
     QuizItemWithAnswers,
-    QuizItemUnanswered
+    QuizItemUnanswered,
+    FinishBanner
   },
 
   data() {
