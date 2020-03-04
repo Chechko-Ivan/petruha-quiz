@@ -392,11 +392,17 @@ export default {
           this.isQuizFinish = true;
 
           if (res.error) {
+            for (let key of Object.keys(this.result)) {
+              delete this.result[key].stepTitle;
+            }
             this.openNotification({ text: res.error });
           }
         })
         .catch(() => {
           loading.close();
+          for (let key of Object.keys(this.result)) {
+            delete this.result[key].stepTitle;
+          }
           this.openNotification({
             text: 'Что-то пошло не так. Попробуйте отправить форму еще раз.'
           });
