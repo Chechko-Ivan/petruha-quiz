@@ -51,7 +51,7 @@
           </QuizItemsWrapper>
 
           <QuizItemsWrapper v-if="quizStep === index && result[quizStep] && step.type === 'FIELDS'">
-            <QuizTitle>{{ step.title }}</QuizTitle>
+            <QuizTitle :title="step.title" />
 
             <vs-input
               v-for="(item, index) in step.items"
