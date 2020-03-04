@@ -472,6 +472,7 @@
   {
     "type": "ITEMS_WITH_ANSWERS",
     "unselectable": true,
+    "requiredAnswerAllItems": true,
     "filterQuizStepIndex": 0,
     "filterByCategory": "CUTLETS",
     "filterByAnswer": [
@@ -876,6 +877,7 @@
   {
     "type": "ITEMS_WITH_ANSWERS",
     "unselectable": true,
+    "requiredAnswerAllItems": true,
     "filterQuizStepIndex": 0,
     "filterByCategory": "SAUSAGES",
     "filterByAnswer": [
