@@ -16,7 +16,7 @@
           <QuizItemsWrapper
             v-if="quizStep === index && result[quizStep] && step.type === 'ITEMS_WITH_ANSWERS'"
           >
-            <QuizTitle>{{ step.title }}</QuizTitle>
+            <QuizTitle :title="step.title" />
 
             <QuizItemWithAnswers
               v-for="(item, index) in step.items"
@@ -37,7 +37,7 @@
           <QuizItemsWrapper
             v-if="quizStep === index && result[quizStep] && step.type === 'UNANSWERED_ITEMS'"
           >
-            <QuizTitle>{{ step.title }}</QuizTitle>
+            <QuizTitle :title="step.title" />
 
             <QuizItemUnanswered
               v-for="(item, index) in step.items"

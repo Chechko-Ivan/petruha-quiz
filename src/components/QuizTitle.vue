@@ -1,6 +1,6 @@
 <template functional>
-  <h2 class="quiz-title">
-    <slot></slot>
+  <h2 class="quiz-title" v-html="props.title">
+    <!-- <slot></slot> -->
   </h2>
 </template>
 
@@ -19,6 +19,10 @@ export default {
 
   @media (max-width: 700px) {
     font-size: 18px;
+  }
+
+  .accent-color {
+    color: var(--red);
   }
 }
 </style>
