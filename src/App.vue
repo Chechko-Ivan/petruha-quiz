@@ -64,12 +64,9 @@
 
         <div v-if="isQuizLoad && quiz.length" class="quiz-button-wrapper">
           <vs-button v-if="quizStep > 0" flat @click="prevStep">Назад</vs-button>
-
           <vs-button flat active @click="nextStep">Дальше</vs-button>
         </div>
       </div>
-
-      <!-- <div v-if="isQuizFinish" class="finish-message">Спасибо за участие!</div> -->
     </Container>
 
     <FinishBanner v-if="isQuizFinish"></FinishBanner>
@@ -87,6 +84,7 @@ import QuizItemUnanswered from '@/components/QuizItemUnanswered.vue';
 import FinishBanner from '@/components/FinishBanner.vue';
 
 export default {
+  quizVersion: 3,
   initialQuizItemResult: {
     value: null,
     error: false
@@ -162,14 +160,14 @@ export default {
   methods: {
     getQuiz() {
       return new Promise(resolve => {
-        import('@/json/quiz.v2.json').then(({ default: quiz }) => {
+        import(`@/json/quiz.v${this.$options.quizVersion}.json`).then(({ default: quiz }) => {
           resolve(quiz);
         });
       });
     },
 
     isStepValid() {
-      const { type, unselectable } = this.quizStorage[this.quizStep];
+      const { type, unselectable, requiredAnswerAllItems } = this.quizStorage[this.quizStep];
       const result = this.result[this.quizStep];
 
       // Пропускаем если нету вопросов
@@ -186,13 +184,12 @@ export default {
         const itemWithErrors = {};
 
         for (let [key, item] of Object.entries(result)) {
-          if (!item.value) {
-            itemWithErrors[key] = { ...item, error: true };
-          } else if (
-            item.value &&
-            String(item.value).indexOf('укажите') !== -1 &&
-            !item.customeValue
-          ) {
+          const isValid =
+            !item.value ||
+            (Array.isArray(item.value) && !item.value.length) ||
+            (item.value && String(item.value).indexOf('укажите') !== -1 && !item.customeValue);
+
+          if (isValid) {
             itemWithErrors[key] = { ...item, error: true };
           } else {
             itemWithErrors[key] = { ...item, error: false };
@@ -204,11 +201,9 @@ export default {
           .map(([, item]) => item.error)
           .filter(error => !error);
 
-        console.log(arrayOfErrors, 'arrayOfErrors');
-
         return (
           arrayOfErrors.length === Object.keys(itemWithErrors).length ||
-          (unselectable && arrayOfErrors.length)
+          (unselectable && !requiredAnswerAllItems && arrayOfErrors.length)
         );
       } else if (type && type === 'UNANSWERED_ITEMS') {
         if (!result.value) {
@@ -239,12 +234,13 @@ export default {
     },
 
     setResultPlaceholder({ id, title, category, index, step }) {
-      const { type } = this.quiz[step];
+      const { type, unselectable } = this.quiz[step];
 
       if (type === 'ITEMS_WITH_ANSWERS') {
         if (this.result[step]) {
           this.$set(this.result[step], index, {
             ...this.$options.initialQuizItemResult,
+            value: unselectable ? [] : null,
             id,
             title,
             category
@@ -253,6 +249,7 @@ export default {
           this.$set(this.result, step, {
             [index]: {
               ...this.$options.initialQuizItemResult,
+              value: unselectable ? [] : null,
               id,
               title,
               category
@@ -363,10 +360,22 @@ export default {
       this.$scrollTo('#topAnchor', { offset: -100 });
     },
 
+    prepareFormForSubmission() {
+      const { result, quizStorage } = this;
+
+      for (let key of Object.keys(result)) {
+        if (quizStorage[key]) {
+          result[key].stepTitle = quizStorage[key].title;
+        }
+      }
+    },
+
     sendForm() {
       const loading = this.$vs.loading({
         target: this.$refs.quizContent
       });
+
+      this.prepareFormForSubmission();
 
       const body = new FormData();
       body.append('quiz', JSON.stringify(this.result));

@@ -24,7 +24,10 @@
             </component>
 
             <base-text-area
-              v-if="answer.needDescription && answer.value === value"
+              v-if="
+                (answer.needDescription && answer.value === value) ||
+                  (answer.needDescription && value.indexOf(answer.value) !== -1)
+              "
               :id="id"
               :key="`${answer.value}-${index}`"
               :title="answer.descriptionTitle"
